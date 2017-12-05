@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  
+<head>
+    <meta charset="UTF-8">
+    <title>Jen's Amazeballs Psychic Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+            body {
+                background-color: purple;
+            }
+            .box {
+                height: 100px;
+                width: 300px;
+                background-color: orange;
+                font-size: 20px;
+                border: solid 4px black;
+                text-align: center;
+                line-height: 100px;
+                vertical-align: middle;
+                margin: 0 auto;
+            }
+
+           p {
+                font-size: 24px;
+                color: black;
+           }
+         
+    </style>
+
+</head>
+
+<body>
+    <h1>Psychic Game!</h1>
+    <p>Guess what number (0-9) I'm thinking of:</p>
+    
+<div class="container">
+    <div class="row">
+        <div class="lg-col-6">
+            <div class="box" id="score">Score: 0</div>
+            <div class="box" id="totalGuesses">Total Guess: 0</div>
+        </div>
+        
+        <div class="lg-col-6">
+            <div class="box" id="userInput">Guess a number!</div>
+            <div class="box" id="result"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="lg-col-6">
+            <div id="bad"></div>
+    </div>
+</div>
+
+
+<script>
+    var score = 0;
+    var guesses = 0;
+
+    
+    // User input is stored as var userGuess and begins the game
+    document.onkeyup = function(event) {
+        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+        document.querySelector('#userInput').innerHTML = "User Guess: " +userGuess;
+        
+        //console.log("User guess: " +userGuess);
+
+        // var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        var computerChoices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        
+        //console.log("computer guess: " + computerGuess);
+
+        //Running the game - user guess is checked against computer guess, divs update scores
+        if (userGuess == computerGuess) {
+            document.querySelector('#result').innerHTML = "Result: Correct!";
+            score++;
+            updateScore();
+            guesses++;
+            document.querySelector('#totalGuesses').innerHTML = "Total Guesses: " +guesses;
+        }    
+            else if (guesses === 10 && score === 0) {
+                    document.getElementById("bad").classList.add("box");
+                    var stuff = document.querySelector('#bad').innerHTML = "Score: 0/10. Sad puppy is sad."
+                    var img = document.createElement("img");
+                    img.src = "sadpuppy.jpg";
+                    var src = document.getElementById("bad");
+                    src.appendChild(img);
+            }                
+            else {
+                    document.querySelector('#result').innerHTML = "Result: Incorrect!";
+                    guesses++;
+                    document.querySelector('#totalGuesses').innerHTML = "Total Guesses: " +guesses;
+        }
+
+        }
+       
+        // Score Updater
+        function updateScore() {
+            document.querySelector("#score").innerHTML = "Score: " + score;
+        }
+
+
+</script>
+</html>
